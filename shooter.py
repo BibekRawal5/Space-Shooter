@@ -24,7 +24,7 @@ RED_HIT = pygame.USEREVENT + 2
 
 RED_SPACESHIP_IMAGE = pygame.image.load('spaceship_red.png')
 YELLOW_SPACESHIP_IMAGE = pygame.image.load('spaceship_yellow.png')
-BACKGROUND = pygame.transform.scale(pygame.image.load('space.png'), (WIDTH, HEIGHT))
+BACKGROUND = pygame.transform.scale(pygame.image.load('space3.jpg'), (WIDTH, HEIGHT))
 RED_SPACESHIP = pygame.transform.rotate(
     (pygame.transform.scale(RED_SPACESHIP_IMAGE, (S_WIDTH, S_HEIGHT))), 90)
 YELLOW_SPACESHIP = pygame.transform.rotate(
