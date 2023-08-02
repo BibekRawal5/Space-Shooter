@@ -22,12 +22,14 @@ B_VEL = 16
 
 YELLOW_HIT = pygame.USEREVENT + 1
 RED_HIT = pygame.USEREVENT + 2
+MENU_CLOSE = pygame.USEREVENT + 3
 
-RED_SPACESHIP_IMAGE = pygame.image.load('spaceship_red.png')
-YELLOW_SPACESHIP_IMAGE = pygame.image.load('spaceship_yellow.png')
-BACKGROUND1 = pygame.transform.scale(pygame.image.load('space1.png'), (WIDTH, HEIGHT))
-BACKGROUND2 = pygame.transform.scale(pygame.image.load('space2.jpg'), (WIDTH, HEIGHT))
-BACKGROUND3 = pygame.transform.scale(pygame.image.load('space3.jpg'), (WIDTH, HEIGHT))
+RED_SPACESHIP_IMAGE = pygame.image.load('images/spaceship_red.png')
+YELLOW_SPACESHIP_IMAGE = pygame.image.load('images/spaceship_yellow.png')
+BACKGROUND1 = pygame.transform.scale(pygame.image.load('images/space1.png'), (WIDTH, HEIGHT))
+BACKGROUND2 = pygame.transform.scale(pygame.image.load('images/space2.jpg'), (WIDTH, HEIGHT))
+BACKGROUND3 = pygame.transform.scale(pygame.image.load('images/space3.jpg'), (WIDTH, HEIGHT))
+MENU_BACKGROUND = pygame.transform.scale(pygame.image.load('images/menu_background.jpg'), (WIDTH, HEIGHT))
 BACKGROUND = BACKGROUND1.copy()
 RED_SPACESHIP = pygame.transform.rotate(
     (pygame.transform.scale(RED_SPACESHIP_IMAGE, (S_WIDTH, S_HEIGHT))), 90)
@@ -45,21 +47,24 @@ BORDER = pygame.Rect(WIDTH/2, 0, 5, HEIGHT)
 
      
 def menu_select_bacckground():
-    WIN.fill((0,0,0))
-    text = MENU_FONT.render("SELECT THE BACKGROUND", 1, WHITE)
-    WIN.blit(text, (WIDTH/5, HEIGHT/2 - HEIGHT/3))
-
-    WIN.blit(BACKGROUND1_SCALED, BG1)
-    WIN.blit(BACKGROUND2_SCALED, BG2)
-    WIN.blit(BACKGROUND3_SCALED, BG3)
-    pygame.display.update()
     
     clock = pygame.time.Clock()
     while(1):
+        # WIN.blit(MENU_BACKGROUND, (0,0))
+        WIN.fill((0,0,0))
+        text = MENU_FONT.render("SELECT THE BACKGROUND", 1, WHITE)
+        WIN.blit(text, (WIDTH/5, HEIGHT/2 - HEIGHT/3))
+
+        WIN.blit(BACKGROUND1_SCALED, BG1)
+        WIN.blit(BACKGROUND2_SCALED, BG2)
+        WIN.blit(BACKGROUND3_SCALED, BG3)
+        pygame.display.update()
+        
         clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit()
+                pygame.event.post(pygame.event.Event(MENU_CLOSE))
+                return
 
         mouse_press = pygame.mouse.get_pressed()
         pos = pygame.mouse.get_pos()
@@ -137,7 +142,7 @@ def game_finished(winner_text):
          text = WINNER_FONT.render(winner_text, 1, YELLOW)
     WIN.blit(text, (WIDTH/2 - text.get_width() / 2, HEIGHT/2 - text.get_height()/2 ))
     pygame.display.update()
-    pygame.time.delay(2500)
+    pygame.time.delay(2000)
 
 def main():
     
@@ -150,16 +155,15 @@ def main():
     red_bullets = []
     yellow_bullets = []
     
-    # menu_select_bacckground_make()
     menu_select_bacckground()
 
     while run:
         clock.tick(FPS)
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT or event.type == MENU_CLOSE:
                 run = False
                 pygame.QUIT
-                
+            
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LCTRL:
                     bullet = pygame.Rect(red_spaceship.x + red_spaceship.width, red_spaceship.y + red_spaceship.height/2 - 2, 10, 5)
