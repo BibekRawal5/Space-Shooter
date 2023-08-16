@@ -6,8 +6,8 @@ WINNER_FONT = pygame.font.SysFont('comicsans', 100)
 HEALTH_FONT = pygame.font.SysFont('comicsans', 25)
 MENU_FONT = pygame.font.SysFont('comicsans', 40)
 
-FPS = 60
-WIDTH, HEIGHT = 900, 563
+FPS = 120
+WIDTH, HEIGHT = 1000, 650
 WIN = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
 
 BLACK = (0, 0, 0)
@@ -15,10 +15,11 @@ RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
 WHITE = (255, 255, 255)
 
-S_WIDTH, S_HEIGHT = 50, 50
-S_VEL = 8
+S_WIDTH, S_HEIGHT = 70, 70
+S_VEL = 7
 
-B_VEL = 16
+BULLET_WIDTH, BULLET_HEIGHT = 25, 8
+B_VEL = 15
 
 YELLOW_HIT = pygame.USEREVENT + 1
 RED_HIT = pygame.USEREVENT + 2
@@ -166,11 +167,11 @@ def main():
             
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LCTRL:
-                    bullet = pygame.Rect(red_spaceship.x + red_spaceship.width, red_spaceship.y + red_spaceship.height/2 - 2, 10, 5)
+                    bullet = pygame.Rect(red_spaceship.x + red_spaceship.width, red_spaceship.y + red_spaceship.height/2 - 2, BULLET_WIDTH, BULLET_HEIGHT)
                     red_bullets.append(bullet)
                 
                 if event.key == pygame.K_RCTRL:
-                    bullet = pygame.Rect(yellow_spaceship.x , yellow_spaceship.y + yellow_spaceship.height/2 - 2, 10, 5)
+                    bullet = pygame.Rect(yellow_spaceship.x , yellow_spaceship.y + yellow_spaceship.height/2 - 2, BULLET_WIDTH, BULLET_HEIGHT)
                     yellow_bullets.append(bullet)
                     
             if event.type == RED_HIT:
